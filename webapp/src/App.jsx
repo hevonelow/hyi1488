@@ -124,7 +124,7 @@ function App() {
       })
       .then(data => {
         if (data.status === 'scammed') setAppState('scammed');
-        setBalance(data.balance || 0);
+        setBalance(data.balance !== undefined ? data.balance : 0);
       })
       .catch(console.error);
   }, [userId]);
