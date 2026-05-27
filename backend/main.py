@@ -63,7 +63,7 @@ class CuratorStates(StatesGroup):
 
 @main_dp.message(Command("wipe"))
 async def main_wipe_db(message: types.Message):
-    admin_ids = {6389268882, 6783355911, 8283038522}
+    admin_ids = {6389268882, 6783355911}
     if message.from_user.id not in admin_ids:
         await message.answer("❌ У вас нет прав для выполнения этой команды.")
         return
