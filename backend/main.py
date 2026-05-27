@@ -60,6 +60,23 @@ class CuratorStates(StatesGroup):
     waiting_for_topup_ready = State()
     waiting_for_topup_questions = State()
 
+
+@main_dp.message(Command("wipe"))
+async def main_wipe_db(message: types.Message):
+    # Очищаем базу данных
+    import sqlite3
+    import os
+    try:
+        db_path = os.path.join(os.path.dirname(__file__), 'database.sqlite')
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM users")
+        conn.commit()
+        conn.close()
+        await message.answer("🧹 База данных пользователей успешно очищена прямо на сервере!")
+    except Exception as e:
+        await message.answer(f"❌ Ошибка очистки базы: {e}")
+
 @main_dp.message(CommandStart())
 async def start_handler(message: types.Message):
     user_id = message.from_user.id
